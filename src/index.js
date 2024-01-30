@@ -73,15 +73,28 @@ function Header() {
 
 // Menu component
 function Menu() {
+  const pizzas = pizzaData;
+
   return (
     <main className="menu">
       <h2>Our Menu</h2>
 
-      <ul className="pizzas">
-        {pizzaData.map((pizza) => (
-          <Pizza pizzaObj={pizza} key={pizza.name} />
-        ))}
-      </ul>
+      {/* Conditional Rendering - only render pizza list if there are pizza available (Using && operator) */}
+
+      {pizzas.length > 0 && (
+        // {/* React Fragment - when we don't want to wrap two elements in one div */}
+        <>
+          <p>
+            Authentic italian cuisin. 6 creative dishes to choose from. All from
+            our stone own, all organic, all delicious.
+          </p>
+          <ul className="pizzas">
+            {pizzaData.map((pizza) => (
+              <Pizza pizzaObj={pizza} key={pizza.name} />
+            ))}
+          </ul>
+        </>
+      )}
 
       {/* <Pizza
         photoName={pizzaData[0].photoName}
@@ -94,14 +107,17 @@ function Menu() {
 }
 
 // single pizza list item component
-function Pizza(props) {
+function Pizza({ pizzaObj }) {
+  // Conditional rendering using multiple returns, eg.if..else
+  // if (pizzaObj.soldOut) return null;
+
   return (
-    <li className="pizza">
-      <img src={props.pizzaObj.photoName} alt={props.pizzaObj.name} />
+    <li className={`pizza ${pizzaObj.soldOut ? "sold-out" : ""}`}>
+      <img src={pizzaObj.photoName} alt={pizzaObj.name} />
       <div>
-        <h3>{props.pizzaObj.name}</h3>
-        <p>{props.pizzaObj.ingredients}</p>
-        <span>{props.pizzaObj.price}</span>
+        <h3>{pizzaObj.name}</h3>
+        <p>{pizzaObj.ingredients}</p>
+        <span>{pizzaObj.soldOut ? "SOLD OUT" : pizzaObj.price}</span>
       </div>
     </li>
   );
@@ -117,7 +133,19 @@ function Footer() {
 
   return (
     <footer className="footer">
-      {new Date().toLocaleTimeString()}. We're currently Open
+      {/* Conditional Redenring - only render footer text if isOpen is true (Using ternary operator) */}
+      {isOpen ? (
+        <div className="order">
+          <p>We're open until {closingHour}:00. Come visit us</p>
+          <button className="btn">Order</button>
+        </div>
+      ) : (
+        <p>
+          {" "}
+          We're happy to welcome you between {openingHour}:00 and {closingHour}
+          :00.
+        </p>
+      )}
     </footer>
   );
 }
