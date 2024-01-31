@@ -2,6 +2,10 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 
+import Menu from "./menu.js";
+import Header from "./header.js";
+import Footer from "./footer.js";
+
 // Sample data for pizza
 
 const pizzaData = [
@@ -51,104 +55,16 @@ const pizzaData = [
 
 // Default app component
 
-function App() {
+const App = () => {
   // const c = console.log("");
   return (
     <div className="container">
       <Header />
-      <Menu />
+      <Menu pizzaData={pizzaData} />
       <Footer />
     </div>
   );
-}
-
-// Header Component
-function Header() {
-  return (
-    <header className="header">
-      <h1>Fast React Pizza Co.</h1>
-    </header>
-  );
-}
-
-// Menu component
-function Menu() {
-  const pizzas = pizzaData;
-
-  return (
-    <main className="menu">
-      <h2>Our Menu</h2>
-
-      {/* Conditional Rendering - only render pizza list if there are pizza available (Using && operator) */}
-
-      {pizzas.length > 0 && (
-        // {/* React Fragment - when we don't want to wrap two elements in one div */}
-        <>
-          <p>
-            Authentic italian cuisin. 6 creative dishes to choose from. All from
-            our stone own, all organic, all delicious.
-          </p>
-          <ul className="pizzas">
-            {pizzaData.map((pizza) => (
-              <Pizza pizzaObj={pizza} key={pizza.name} />
-            ))}
-          </ul>
-        </>
-      )}
-
-      {/* <Pizza
-        photoName={pizzaData[0].photoName}
-        pizzaName={pizzaData[0].name}
-        ingredients={pizzaData[0].ingredients}
-        price={pizzaData[0].price}
-      /> */}
-    </main>
-  );
-}
-
-// single pizza list item component
-function Pizza({ pizzaObj }) {
-  // Conditional rendering using multiple returns, eg.if..else
-  // if (pizzaObj.soldOut) return null;
-
-  return (
-    <li className={`pizza ${pizzaObj.soldOut ? "sold-out" : ""}`}>
-      <img src={pizzaObj.photoName} alt={pizzaObj.name} />
-      <div>
-        <h3>{pizzaObj.name}</h3>
-        <p>{pizzaObj.ingredients}</p>
-        <span>{pizzaObj.soldOut ? "SOLD OUT" : pizzaObj.price}</span>
-      </div>
-    </li>
-  );
-}
-
-// Footer components
-function Footer() {
-  const hour = new Date().getHours();
-  const openingHour = 10;
-  const closingHour = 22;
-  const isOpen = hour >= openingHour && hour <= closingHour;
-  console.log(isOpen);
-
-  return (
-    <footer className="footer">
-      {/* Conditional Redenring - only render footer text if isOpen is true (Using ternary operator) */}
-      {isOpen ? (
-        <div className="order">
-          <p>We're open until {closingHour}:00. Come visit us</p>
-          <button className="btn">Order</button>
-        </div>
-      ) : (
-        <p>
-          {" "}
-          We're happy to welcome you between {openingHour}:00 and {closingHour}
-          :00.
-        </p>
-      )}
-    </footer>
-  );
-}
+};
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
