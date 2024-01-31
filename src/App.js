@@ -1,3 +1,9 @@
+import "./index.css";
+
+import { Menu } from "./menu.js";
+import { Header } from "./header.js";
+import { Footer } from "./footer.js";
+
 const pizzaData = [
   {
     name: "Focaccia",
@@ -42,3 +48,13 @@ const pizzaData = [
     soldOut: false,
   },
 ];
+
+export const App = () => {
+  return (
+    <div className="container">
+      <Header />
+      <Menu pizzaData={pizzaData} />
+      <Footer />
+    </div>
+  );
+};
